@@ -1,0 +1,48 @@
+# Unique name for this workflow
+name: CI on PR for the prerelease  branch
+
+# Definition of when the workflow should run
+on:
+    workflow_dispatch:
+        inputs:
+            prerelease:
+                description: 'Run on a prerelease or UAT org?'
+                required: false
+                type: boolean
+    pull_request:
+        types: [opened, edited, synchronize, reopened]
+
+# Workflow environment variables
+env:
+    # Is the PR base branch a prerelease branch
+    IS_PRERELEASE: ${{ startsWith(github.event.pull_request.base.ref, 'prerelease/') || inputs.prerelease  }}
+
+# Jobs to be executed
+jobs:
+   # Formatting and linting runs on PRs
+    format-lint-lwc-tests:
+        runs-on: ubuntu-latest
+        steps:
+            # Checkout the source code
+            - name: 'Checkout source code'
+              uses: actions/checkout@v4
+
+            # Install Volta to enforce proper node and package manager versions
+            - name: 'Install Volta'
+              uses: volta-cli/action@v4
+
+            # Install npm dependencies for Prettier
+            - name: 'Install npm dependencies'
+              run: HUSKY=0 npm i
+
+            # Prettier formatting
+            - name: 'Code formatting verification with Prettier'
+              run: npm run prettier --write
+
+            # Lint LWC / Aura
+            # - name: 'Lint Lightning Web Components / Aura Components'
+            #  run: npm run lint
+
+            # LWC unit tests
+            # - name: 'Unit test Lightning Web Components'
+            #  run: npm run test:unit:coverage

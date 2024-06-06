@@ -1,0 +1,54 @@
+# Unique name for this workflow
+name: SFDX-CLI to Deploy to Production Org
+
+# Definition of when the workflow should run
+on:
+    workflow_dispatch:
+
+# Jobs to be executed
+jobs:
+  SFDX-CLI-Deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "🐧 GitHub Action running on ${{ runner.os }}"
+
+      - run: echo "🔎 Retrieving ${{ github.ref }} from ${{ github.repository }}."
+
+    # Checkout the source code
+      - name: 'Checkout source code'
+        uses: actions/checkout@v2
+
+    # Run PMD scan
+      - name: 'Run PMD scan'
+        uses: pmd/pmd-github-action@v2.0.0
+        id: pmd
+        with:
+            version: '6.55.0'
+            sourcePath: 'force-app'
+            rulesets: 'ruleset.xml'
+
+    # Check for PMD violations
+      - name: 'Check for PMD violations'
+        if: steps.pmd.outputs.violations != 0
+        run: exit 1
+
+    # Install Salesforce CLI
+      - name: 'Install Salesforce CLI'
+        run: npm install @salesforce/cli -global
+
+    # Test print the secret key for validation
+      - run: echo "${{ secrets.SALESFORCE_JWT_SECRET_KEY }}" > server.key
+
+    # Authenticate login using oAuth
+      - name: 'Secure authenticate to the SFDC Org for deployment'
+        run: sf org login jwt --client-id ${{ secrets.SALESFORCE_CONSUMER_KEY }} --jwt-key-file server.key --username ${{ secrets.SALESFORCE_DEVHUB_USERNAME }} --set-default-dev-hub
+
+      # - run: sfdx force:source:deploy -p force-app/main/default --testlevel=RunLocalTests -u ${{ secrets.SALESFORCE_DEVHUB_USERNAME }}
+
+    # Deploy the source code to the production org and run tests
+      # - name: 'Push the source code to the production org and run tests'
+      # - run: sf project deploy start --source-dir force-app/main/default --test-level RunLocalTests --target-org ${{ secrets.SALESFORCE_DEVHUB_USERNAME }}
+
+    # Deploy the source code to the production org without running the tests
+      - name: 'Push the source code to the production org'
+        run: sf project deploy start --source-dir force-app/main/default --target-org ${{ secrets.SALESFORCE_DEVHUB_USERNAME }}
