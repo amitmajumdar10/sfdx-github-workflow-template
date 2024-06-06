@@ -1,3 +1,5 @@
+# This workflow is based on - https://github.com/trailheadapps/lwc-recipes/blob/main/.github/workflows/ci-pr.yml
+
 # Unique name for this workflow
 name: CI on PR for the prerelease  branch
 
