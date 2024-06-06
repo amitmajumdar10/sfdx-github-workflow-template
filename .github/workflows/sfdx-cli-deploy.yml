@@ -1,6 +1,6 @@
-#This workflow is based on the below
-    #https://salesforcedevops.net/index.php/2022/04/05/how-to-use-github-actions-oauth-and-sfdx-cli-for-continuous-integration/
-    #https://gist.github.com/vkeenan/e21b16eb867abed0221a77059451ee7c
+# This workflow is based on the below
+    # https://salesforcedevops.net/index.php/2022/04/05/how-to-use-github-actions-oauth-and-sfdx-cli-for-continuous-integration/
+    # https://gist.github.com/vkeenan/e21b16eb867abed0221a77059451ee7c
 
 # Unique name for this workflow
 name: SFDX-CLI to Deploy to Production Org
