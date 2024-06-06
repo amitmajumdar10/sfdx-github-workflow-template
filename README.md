@@ -1,5 +1,6 @@
 # sfdx-github-workflow-template
 This is a sample SFDX repository to demonstrate the Github Workflows and Actions for CI/CD processes using SFDX and CLI
+The workflow is created by referring to https://salesforcedevops.net/index.php/2022/04/05/how-to-use-github-actions-oauth-and-sfdx-cli-for-continuous-integration/
 
 # How To Use SFDX-CLI with GitHub Actions
 
