@@ -1,5 +1,6 @@
 public with sharing class HelloWorld {
-    public void HelloWorld() {
+    public Boolean helloWorld() {
         System.debug('Hello World');
+        return true;
     }
 }
