@@ -1,6 +1,10 @@
 # sfdx-github-workflow-template
-This is a sample SFDX repository to demonstrate the Github Workflows and Actions for CI/CD processes using SFDX and CLI
-The workflow is created by referring to https://salesforcedevops.net/index.php/2022/04/05/how-to-use-github-actions-oauth-and-sfdx-cli-for-continuous-integration/
+This is a sample SFDX repository to demonstrate the Github Workflows and Actions for CI/CD processes using SFDX and CLI.
+
+For creating the Self-Sign certificate and Connected App for the JWT Auth Flow, follow the below documentation:
+ - https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_auth_jwt_flow.htm
+ - https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_auth_key_and_cert.htm
+ - https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_auth_connected_app.htm
 
 # How To Use SFDX-CLI with GitHub Actions
 
@@ -49,6 +53,11 @@ sf org login jwt --client-id [85 char string] --username username@domain.com --j
 
 Create the following secrets:
 
-* SALESFORCE_CONSUMER_KEY
-* SALESFORCE_DEVHUB_USERNAME
-* SALESFORCE_JWT_SECRET_KEY
+* **SALESFORCE_CONSUMER_KEY** - 
+  Get the Consumer Key from the Connected App: <img width="660" alt="image" src="https://github.com/amitmajumdar10/sfdx-github-workflow-template/assets/46327185/b281e08b-6a26-45b2-94b5-3cb1011e9a5f">
+ 
+* **SALESFORCE_DEVHUB_USERNAME** -
+  The username of the Salesforce user that will be used for the deployment. Please note, the user should have the profile or permission set assigned which is added to the Connected App.
+  
+* **SALESFORCE_JWT_SECRET_KEY** -
+  The content of the secret.key file, generated using OpenSSL.
