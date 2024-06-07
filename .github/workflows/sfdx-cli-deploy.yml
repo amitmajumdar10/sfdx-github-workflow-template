@@ -51,7 +51,7 @@ jobs:
 
     # Deploy the source code to the production org and run tests
       - name: 'Push the source code to the production org and run tests'
-      - run: sf project deploy start --source-dir force-app/main/default --test-level RunLocalTests --target-org ${{ secrets.SALESFORCE_DEVHUB_USERNAME }}
+        run: sf project deploy start --source-dir force-app/main/default --test-level RunLocalTests --target-org ${{ secrets.SALESFORCE_DEVHUB_USERNAME }}
 
     # Deploy the source code to the production org without running the tests
       # - name: 'Push the source code to the production org'
